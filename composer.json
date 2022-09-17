@@ -1,0 +1,20 @@
+{
+    "name": "test/container",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Test\\Container\\": "src/Container"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\Container\\Test\\": "tests/Test/Container"
+        }
+    },
+    "require": {
+        "psr/container": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
