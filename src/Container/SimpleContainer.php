@@ -8,6 +8,8 @@ class SimpleContainer implements ContainerInterface
 {
     private array $factories = [];
 
+    private array $cache = [];
+
     public function set(string $id, callable $factory)
     {
         $this->factories[$id] = $factory;
@@ -19,7 +21,11 @@ class SimpleContainer implements ContainerInterface
             throw new FactoryNotFoundException();
         }
 
-        return $this->factories[$id]($this);
+        if (!isset($this->cache[$id])) {
+            $this->cache[$id] = $this->factories[$id]($this);
+        }
+
+        return $this->cache[$id];
     }
 
     public function has(string $id): bool

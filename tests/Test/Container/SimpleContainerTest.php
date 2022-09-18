@@ -44,6 +44,17 @@ class SimpleContainerTest extends TestCase
         $this->assertInstanceOf(Bar::class, $bar);
     }
 
+    public function testGet_whenPassingSameId_shouldReturnSameInstance()
+    {
+        $container = new SimpleContainer();
+        $container->set('Foo', fn (ContainerInterface $c) => new Foo());
+
+        $foo1 = $container->get('Foo');
+        $foo2 = $container->get('Foo');
+
+        $this->assertSame($foo1, $foo2);
+    }
+
     public function testHas_whenExistingFactory_shouldReturnTrue()
     {
         $container = new SimpleContainer();
