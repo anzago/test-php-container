@@ -5,15 +5,15 @@ namespace Test\Container\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Test\Container\Container;
+use Test\Container\SimpleContainer;
 use Test\Container\Test\Fixtures\Bar;
 use Test\Container\Test\Fixtures\Foo;
 
-class ContainerTest extends TestCase
+class SimpleContainerTest extends TestCase
 {
     public function testGet_whenMissingFactory_shouldThrowException()
     {
-        $container = new Container();
+        $container = new SimpleContainer();
 
         $this->expectException(NotFoundExceptionInterface::class);
 
@@ -22,7 +22,7 @@ class ContainerTest extends TestCase
 
     public function testGet_whenOneLevelDependency_shouldExecuteFactory()
     {
-        $container = new Container();
+        $container = new SimpleContainer();
         $container->set('Foo', fn (ContainerInterface $c) => new Foo());
 
         $foo = $container->get('Foo');
@@ -32,7 +32,7 @@ class ContainerTest extends TestCase
 
     public function testGet_whenTwoLevelDependency_shouldExecuteFactories()
     {
-        $container = new Container();
+        $container = new SimpleContainer();
         $container->set('Foo', fn (ContainerInterface $c) => new Foo());
         $container->set('Bar', function (ContainerInterface $c) {
             $foo = $c->get('Foo');
@@ -46,7 +46,7 @@ class ContainerTest extends TestCase
 
     public function testHas_whenExistingFactory_shouldReturnTrue()
     {
-        $container = new Container();
+        $container = new SimpleContainer();
         $container->set('Foo', fn (ContainerInterface $c) => new Foo());
 
         $hasFoo = $container->has('Foo');
@@ -56,7 +56,7 @@ class ContainerTest extends TestCase
 
     public function testHas_whenNonExistingFactory_shouldReturnFalse()
     {
-        $container = new Container();
+        $container = new SimpleContainer();
 
         $hasFoo = $container->has('Foo');
 

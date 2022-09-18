@@ -4,7 +4,7 @@ namespace Test\Container;
 
 use Psr\Container\ContainerInterface;
 
-class Container implements ContainerInterface
+class SimpleContainer implements ContainerInterface
 {
     private array $factories = [];
 
